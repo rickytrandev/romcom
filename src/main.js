@@ -1,5 +1,7 @@
 // Create variables targetting the relevant DOM elements here 👇
 var randButton = document.querySelector(".random-cover-button");
+var saveButton = document.querySelector('.save-cover-button')
+var makeYourOwnBtn = document.querySelector('.make-new-button')
 var imageCover = document.querySelector(".cover-image");
 var bookTitle = document.querySelector(".cover-title");
 var tagline1 = document.querySelector(".tagline-1");
@@ -21,6 +23,7 @@ var formView = document.querySelector(".form-view");
 randButton.addEventListener("click", generateNewCover);
 viewCoversBtn.addEventListener("click", viewSavedCovers);
 homeBtn.addEventListener("click", returnToHome);
+makeYourOwnBtn.addEventListener('click', showFormView);
 
 // Create your event handlers and other functions here 👇
 function generateNewTitle() {
@@ -59,6 +62,7 @@ function viewSavedCovers() {
   randButton.classList.add("hidden");
   saveCoverBtn.classList.add("hidden");
   homeBtn.classList.remove("hidden");
+  formView.classList.add('hidden');
 }
 
 function returnToHome() {
@@ -69,6 +73,15 @@ function returnToHome() {
   randButton.classList.remove("hidden");
   saveCoverBtn.classList.remove("hidden");
 }
+
+function showFormView() {
+  document.querySelector('.home-view').classList.add('hidden')
+  document.querySelector('.form-view').classList.remove('hidden')
+  randButton.classList.add('hidden')
+  saveButton.classList.add('hidden') 
+  homeBtn.classList.remove('hidden') 
+  savedCoversView.classList.add('hidden');
+};
 
 // Starting conditions
 generateNewCover();
