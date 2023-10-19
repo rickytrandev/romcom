@@ -1,5 +1,8 @@
 // Create variables targetting the relevant DOM elements here 👇
 var randButton = document.querySelector('.random-cover-button');
+var saveButton = document.querySelector('.save-cover-button')
+var makeYourOwnBtn = document.querySelector('.make-new-button')
+var homeButton = document.querySelector('.home-button')
 var imageCover = document.querySelector('.cover-image');
 var bookTitle = document.querySelector('.cover-title');
 var tagline1 = document.querySelector('.tagline-1');
@@ -13,6 +16,7 @@ var currentCover;
 
 // Add your event listeners here 👇
 randButton.addEventListener('click', generateNewCover);
+makeYourOwnBtn.addEventListener('click', showFormView);
 
 // Create your event handlers and other functions here 👇
 function generateNewTitle() {
@@ -44,6 +48,14 @@ function generateNewCover() {
   generateNewTitle();
   generateNewTagline();
 }
+
+function showFormView() {
+  document.querySelector('.home-view').classList.add('hidden')
+  document.querySelector('.form-view').classList.remove('hidden')
+  randButton.classList.add('hidden')
+  saveButton.classList.add('hidden') 
+  homeButton.classList.remove('hidden') 
+};
 
 // Starting conditions 
 generateNewCover();
