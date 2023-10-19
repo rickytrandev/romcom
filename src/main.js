@@ -1,34 +1,41 @@
 // Create variables targetting the relevant DOM elements here 👇
-var randButton = document.querySelector('.random-cover-button');
+var randButton = document.querySelector(".random-cover-button");
 var saveButton = document.querySelector('.save-cover-button')
 var makeYourOwnBtn = document.querySelector('.make-new-button')
-var homeButton = document.querySelector('.home-button')
-var imageCover = document.querySelector('.cover-image');
-var bookTitle = document.querySelector('.cover-title');
-var tagline1 = document.querySelector('.tagline-1');
-var tagline2 = document.querySelector('.tagline-2');
+var imageCover = document.querySelector(".cover-image");
+var bookTitle = document.querySelector(".cover-title");
+var tagline1 = document.querySelector(".tagline-1");
+var tagline2 = document.querySelector(".tagline-2");
+var viewCoversBtn = document.querySelector(".view-saved-button");
+var homePage = document.querySelector(".home-view");
+var savedCoversView = document.querySelector(".saved-view");
+var saveCoverBtn = document.querySelector(".save-cover-button");
+var homeBtn = document.querySelector(".home-button");
+var formView = document.querySelector(".form-view");
 
 // We've provided a few variables below
-var savedCovers = [
-  createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
-];
-var currentCover;
+// var savedCovers = [
+//   createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
+// ];
+// var currentCover;
 
 // Add your event listeners here 👇
-randButton.addEventListener('click', generateNewCover);
+randButton.addEventListener("click", generateNewCover);
+viewCoversBtn.addEventListener("click", viewSavedCovers);
+homeBtn.addEventListener("click", returnToHome);
 makeYourOwnBtn.addEventListener('click', showFormView);
 
 // Create your event handlers and other functions here 👇
 function generateNewTitle() {
   var index = getRandomIndex(titles);
-  
+
   bookTitle.innerText = titles[index];
 }
 
 function generateNewTagline() {
   var index1 = getRandomIndex(titles);
   var index2 = getRandomIndex(titles);
-  
+
   if (index2 === index1) {
     if (index1 === descriptors.length - 1) {
       index2 = 0;
@@ -36,7 +43,7 @@ function generateNewTagline() {
       index2 = index1 + 1;
     }
   }
-  
+
   tagline1.innerText = descriptors[index1];
   tagline2.innerText = descriptors[index2];
 }
@@ -49,15 +56,34 @@ function generateNewCover() {
   generateNewTagline();
 }
 
+function viewSavedCovers() {
+  homePage.classList.add("hidden");
+  savedCoversView.classList.remove("hidden");
+  randButton.classList.add("hidden");
+  saveCoverBtn.classList.add("hidden");
+  homeBtn.classList.remove("hidden");
+  formView.classList.add('hidden');
+}
+
+function returnToHome() {
+  savedCoversView.classList.add("hidden");
+  formView.classList.add("hidden");
+  homePage.classList.remove("hidden");
+  homeBtn.classList.add("hidden");
+  randButton.classList.remove("hidden");
+  saveCoverBtn.classList.remove("hidden");
+}
+
 function showFormView() {
   document.querySelector('.home-view').classList.add('hidden')
   document.querySelector('.form-view').classList.remove('hidden')
   randButton.classList.add('hidden')
   saveButton.classList.add('hidden') 
-  homeButton.classList.remove('hidden') 
+  homeBtn.classList.remove('hidden') 
+  savedCoversView.classList.add('hidden');
 };
 
-// Starting conditions 
+// Starting conditions
 generateNewCover();
 generateNewTitle();
 generateNewTagline();
@@ -73,7 +99,7 @@ function createCover(imgSrc, title, descriptor1, descriptor2) {
     coverImg: imgSrc,
     title: title,
     tagline1: descriptor1,
-    tagline2: descriptor2
-  }
-  return cover
+    tagline2: descriptor2,
+  };
+  return cover;
 }
