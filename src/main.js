@@ -1,7 +1,7 @@
 // Create variables targetting the relevant DOM elements here 👇
 var randButton = document.querySelector(".random-cover-button");
-var saveButton = document.querySelector('.save-cover-button')
-var makeYourOwnBtn = document.querySelector('.make-new-button')
+var saveButton = document.querySelector(".save-cover-button");
+var makeYourOwnBtn = document.querySelector(".make-new-button");
 var imageCover = document.querySelector(".cover-image");
 var bookTitle = document.querySelector(".cover-title");
 var tagline1 = document.querySelector(".tagline-1");
@@ -12,6 +12,11 @@ var savedCoversView = document.querySelector(".saved-view");
 var saveCoverBtn = document.querySelector(".save-cover-button");
 var homeBtn = document.querySelector(".home-button");
 var formView = document.querySelector(".form-view");
+var newBookBtn = document.querySelector(".create-new-book-button");
+var formImg = document.querySelector(".user-cover");
+var formTitle = document.querySelector(".user-title");
+var formDescriptor1 = document.querySelector(".user-desc1");
+var formDescriptor2 = document.querySelector(".user-desc2");
 
 // We've provided a few variables below
 // var savedCovers = [
@@ -23,7 +28,8 @@ var formView = document.querySelector(".form-view");
 randButton.addEventListener("click", generateNewCover);
 viewCoversBtn.addEventListener("click", viewSavedCovers);
 homeBtn.addEventListener("click", returnToHome);
-makeYourOwnBtn.addEventListener('click', showFormView);
+makeYourOwnBtn.addEventListener("click", showFormView);
+newBookBtn.addEventListener("click", pushUserInput);
 
 // Create your event handlers and other functions here 👇
 function generateNewTitle() {
@@ -62,7 +68,7 @@ function viewSavedCovers() {
   randButton.classList.add("hidden");
   saveCoverBtn.classList.add("hidden");
   homeBtn.classList.remove("hidden");
-  formView.classList.add('hidden');
+  formView.classList.add("hidden");
 }
 
 function returnToHome() {
@@ -75,13 +81,30 @@ function returnToHome() {
 }
 
 function showFormView() {
-  document.querySelector('.home-view').classList.add('hidden')
-  document.querySelector('.form-view').classList.remove('hidden')
-  randButton.classList.add('hidden')
-  saveButton.classList.add('hidden') 
-  homeBtn.classList.remove('hidden') 
-  savedCoversView.classList.add('hidden');
-};
+  document.querySelector(".home-view").classList.add("hidden");
+  document.querySelector(".form-view").classList.remove("hidden");
+  randButton.classList.add("hidden");
+  saveButton.classList.add("hidden");
+  homeBtn.classList.remove("hidden");
+  savedCoversView.classList.add("hidden");
+}
+
+function pushUserInput() {
+  event.preventDefault();
+  covers.push(formImg.value);
+  titles.push(formTitle.value);
+  descriptors.push(formDescriptor1.value);
+  descriptors.push(formDescriptor2.value);
+  returnToHome();
+  generateUserCover();
+}
+
+function generateUserCover() {
+  imageCover.src = covers.slice(-1);
+  bookTitle.innerText = titles.slice(-1);
+  tagline2.innerText = descriptors.slice(-1);
+  tagline1.innerText = descriptors.slice(-2, -1);
+}
 
 // Starting conditions
 generateNewCover();
