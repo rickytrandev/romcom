@@ -51,46 +51,6 @@ function createCover(imgSrc, title, descriptor1, descriptor2) {
   return cover;
 }
 
-function saveCover() {
-  savedCovers.push(
-    createCover(
-      imageCover.src,
-      bookTitle.innerText,
-      tagline1.innerText,
-      tagline2.innerText
-    )
-    // var id = createCover.id;
-  );
-}
-
-function generateSavedCovers() {
-  // create elements
-  var div = document.createElement("div");
-  var img = document.createElement("img");
-  var h2 = document.createElement("h2");
-  var h3 = document.createElement("h3");
-  var id = savedCovers[0].id;
-
-  // give values to elements
-  for (var i = 0; i < savedCovers.length; i++) {
-    img.src = `${savedCovers[i].coverImg}`;
-    h2.innerText = `${savedCovers[i].title}`;
-    h3.innerText = `A tale of ${savedCovers[i].tagline1} and ${savedCovers[i].tagline2}`;
-  }
-
-  // populate page
-  savedCoversSection.appendChild(div);
-  div.appendChild(img);
-  div.appendChild(h2);
-  div.appendChild(h3);
-
-  // style elements
-  div.classList.add("mini-cover");
-  img.classList.add("mini-cover");
-  h2.classList.add("cover-title");
-  h3.classList.add("tagline");
-}
-
 // Create your event handlers and other functions here 👇
 function generateNewTitle() {
   return titles[getRandomIndex(titles)];
@@ -102,7 +62,7 @@ function generateNewTagline1() {
 
 function generateNewTagline2() {
   var tagline2 = descriptors[getRandomIndex(descriptors)];
-  while (tagline2 === generateNewTagline1)
+  while (tagline2 === generateNewTagline1())
     return descriptors[getRandomIndex(descriptors)];
   return tagline2;
 }
@@ -122,6 +82,82 @@ function generateNewCover() {
   tagline2.innerText = currentCover.tagline2;
 }
 
+function saveCover() {
+  var isDuplicate = false;
+
+  for (var i = 0; i < savedCovers.length; i++) {
+    var cover = savedCovers[i];
+
+    if (
+      cover.coverImg === imageCover.src &&
+      cover.title === bookTitle.innerText &&
+      cover.tagline1 === tagline1.innerText &&
+      cover.tagline2 === tagline2.innerText
+    ) {
+      isDuplicate = true;
+    }
+  }
+
+  if (!isDuplicate) {
+    savedCovers.push(
+      createCover(
+        imageCover.src,
+        bookTitle.innerText,
+        tagline1.innerText,
+        tagline2.innerText
+      )
+    );
+  }
+}
+
+function generateSavedCovers() {
+  // clear out previous covers
+  savedCoversSection.innerHTML = "";
+
+  for (var i = 0; i < savedCovers.length; i++) {
+    // create elements
+    var div = document.createElement("div");
+    var img = document.createElement("img");
+    var h2 = document.createElement("h2");
+    var h3 = document.createElement("h3");
+
+    // give values to elements
+    img.src = `${savedCovers[i].coverImg}`;
+    h2.innerText = `${savedCovers[i].title}`;
+    h3.innerText = `A tale of ${savedCovers[i].tagline1} and ${savedCovers[i].tagline2}`;
+
+    // populate page
+    savedCoversSection.appendChild(div);
+    div.appendChild(img);
+    div.appendChild(h2);
+    div.appendChild(h3);
+
+    // style elements
+    div.classList.add("mini-cover");
+    img.classList.add("mini-cover");
+    h2.classList.add("cover-title");
+    h3.classList.add("tagline");
+  }
+}
+
+function pushUserInput() {
+  event.preventDefault();
+  covers.push(formImg.value);
+  titles.push(formTitle.value);
+  descriptors.push(formDescriptor1.value);
+  descriptors.push(formDescriptor2.value);
+  returnToHome();
+  generateUserCover();
+}
+
+function generateUserCover() {
+  imageCover.src = covers.slice(-1);
+  bookTitle.innerText = titles.slice(-1);
+  tagline2.innerText = descriptors.slice(-1);
+  tagline1.innerText = descriptors.slice(-2, -1);
+}
+
+// SWITCH PAGES FUNCTIONS
 function viewSavedCovers() {
   homePage.classList.add("hidden");
   savedCoversView.classList.remove("hidden");
@@ -148,29 +184,6 @@ function showFormView() {
   saveButton.classList.add("hidden");
   homeBtn.classList.remove("hidden");
   savedCoversView.classList.add("hidden");
-}
-
-function pushUserInput() {
-  event.preventDefault();
-  covers.push(formImg.value);
-  titles.push(formTitle.value);
-  descriptors.push(formDescriptor1.value);
-  descriptors.push(formDescriptor2.value);
-  returnToHome();
-}
-
-function generateUserCover() {
-  currentCover = createCover(
-    formImg.value,
-    formTitle.value,
-    formDescriptor1.value,
-    formDescriptor2.value
-  );
-
-  imageCover.src = currentCover.coverImg;
-  bookTitle.innerText = currentCover.title;
-  tagline1.innerText = currentCover.tagline1;
-  tagline2.innerText = currentCover.tagline2;
 }
 
 // Starting conditions
