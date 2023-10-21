@@ -1,7 +1,7 @@
 // Create variables targetting the relevant DOM elements here 👇
 // BUTTONS
-var randButton = document.querySelector(".random-cover-button");
-var saveButton = document.querySelector(".save-cover-button");
+var randBtn = document.querySelector(".random-cover-button");
+var saveBtn = document.querySelector(".save-cover-button");
 var makeYourOwnBtn = document.querySelector(".make-new-button");
 var viewCoversBtn = document.querySelector(".view-saved-button");
 var saveCoverBtn = document.querySelector(".save-cover-button");
@@ -28,12 +28,13 @@ var savedCovers = [];
 var currentCover;
 
 // Add your event listeners here 👇
-randButton.addEventListener("click", generateNewCover);
+randBtn.addEventListener("click", generateNewCover);
 viewCoversBtn.addEventListener("click", viewSavedCovers);
 homeBtn.addEventListener("click", returnToHome);
 makeYourOwnBtn.addEventListener("click", showFormView);
 newBookBtn.addEventListener("click", pushUserInput);
-saveButton.addEventListener("click", saveCover);
+saveBtn.addEventListener("click", saveCover);
+savedCoversSection.addEventListener("dblclick", deleteCover);
 
 // We've provided two functions to get you started
 function getRandomIndex(array) {
@@ -140,6 +141,25 @@ function generateSavedCovers() {
   }
 }
 
+function deleteCover(event) {
+
+  var imageSrc = event.target.parentElement.children[0].currentSrc;
+  var title = event.target.parentElement.children[1].innerText;
+  var subtitle = event.target.parentElement.children[2].innerText;
+  var taglineArr = subtitle.split(" ");
+  var tagline1 = taglineArr[3];
+  var tagline2 = taglineArr[5];
+  
+  for (i = 0; i < savedCovers.length; i++) {
+    if (imageSrc === savedCovers[i].coverImg && title === savedCovers[i].title && tagline1 === savedCovers[i].tagline1 && tagline2 === savedCovers[i].tagline2) {
+      var indexOf = i
+    }
+  }
+  savedCovers.splice(indexOf, 1);
+  generateSavedCovers();
+  console.log((savedCovers));
+}
+
 function pushUserInput() {
   event.preventDefault();
   covers.push(formImg.value);
@@ -158,32 +178,41 @@ function generateUserCover() {
 }
 
 // SWITCH PAGES FUNCTIONS
+function show(element) {
+  element.classList.remove('hidden');
+}
+  
+function hide(element) {
+  element.classList.add('hidden');
+}
+
 function viewSavedCovers() {
-  homePage.classList.add("hidden");
-  savedCoversView.classList.remove("hidden");
-  randButton.classList.add("hidden");
-  saveCoverBtn.classList.add("hidden");
-  homeBtn.classList.remove("hidden");
-  formView.classList.add("hidden");
+  console.log("It works")
+  hide(homePage);
+  hide(randBtn);
+  hide(saveCoverBtn);
+  hide(formView);
+  show(savedCoversView);
+  show(homeBtn);
   generateSavedCovers();
 }
 
 function returnToHome() {
-  savedCoversView.classList.add("hidden");
-  formView.classList.add("hidden");
-  homePage.classList.remove("hidden");
-  homeBtn.classList.add("hidden");
-  randButton.classList.remove("hidden");
-  saveCoverBtn.classList.remove("hidden");
+  hide(savedCoversView);
+  hide(formView);
+  hide(homeBtn);
+  show(homePage);
+  show(randBtn);
+  show(saveCoverBtn);
 }
 
 function showFormView() {
-  document.querySelector(".home-view").classList.add("hidden");
-  document.querySelector(".form-view").classList.remove("hidden");
-  randButton.classList.add("hidden");
-  saveButton.classList.add("hidden");
-  homeBtn.classList.remove("hidden");
-  savedCoversView.classList.add("hidden");
+  hide(homePage);
+  hide(randBtn);
+  hide(saveBtn);
+  hide(savedCoversView);
+  show(formView);
+  show(homeBtn);
 }
 
 // Starting conditions
