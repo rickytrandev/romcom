@@ -157,7 +157,6 @@ function deleteCover(event) {
   }
   savedCovers.splice(indexOf, 1);
   generateSavedCovers();
-  console.log((savedCovers));
 }
 
 function pushUserInput() {
@@ -187,7 +186,6 @@ function hide(element) {
 }
 
 function viewSavedCovers() {
-  console.log("It works")
   hide(homePage);
   hide(randBtn);
   hide(saveCoverBtn);
