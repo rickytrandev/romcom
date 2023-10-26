@@ -17,8 +17,8 @@ This project explores the relationship between HTML. CSS, JS, and DOM. The app a
 During week 2 of our journey with Turing, We were given 5 days to complete the project.
 
 ### Contributors:
-@rickytrandev
-@camjohnsoncode
+- @rickytrandev
+- @camjohnson-code
 
 ### Learning Goals:
 Our main learning goal was to explore the power of DOM to query the buttons - allowing the user to show and hide views, add and delete covers from our data model, render the list of favorited covers from our data model, and allow the user to create their own cover with their input values.  
